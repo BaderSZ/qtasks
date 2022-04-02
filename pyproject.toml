@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "qtasks"
+version = "0.1.0"
+description = "Google Tasks Library and GUI"
+authors = ["Bader Zaidan <bader@zaidan.pw>"]
+license = "GPL v3.0"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+google-auth = "^2.6.2"
+google-auth-oauthlib = "^0.5.1"
+google-api-core = "^2.7.1"
+google-api-python-client = "^2.42.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+prospector = "^1.7.7"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

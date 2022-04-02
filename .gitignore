@@ -1,0 +1,7 @@
+**/__pycache__/
+.vscode/
+docs/
+keys/
+tmp/
+**/.mypy_cache/
+.pylintrc

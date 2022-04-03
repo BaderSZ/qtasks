@@ -1,4 +1,5 @@
 ## Environment and build files
+.venv/
 env/
 dist/
 build/

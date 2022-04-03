@@ -1,0 +1,26 @@
+strictness: high
+test-warnings: true
+doc-warnings: true
+autodetect: true
+max-line-length: 120
+
+pycodestyle:
+  full: true
+
+pydocstyle:
+  disable: 
+  - D203
+  - D204
+
+pylint:
+  run: false
+
+ignore-paths:
+- docs
+- __pycache__
+- keys
+- .vscode
+
+ignore-patterns:
+- __init__.py
+- main.py

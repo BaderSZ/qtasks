@@ -8,7 +8,7 @@ try:
 
     # Auth libs
     from google.auth.transport.requests import Request
-    from google.auth.exceptions import (OAuthError, ReauthFailError, RefreshError, 
+    from google.auth.exceptions import (OAuthError, ReauthFailError, RefreshError,
                                         TransportError)  # , UserAccessTokenError)
 
     from google.oauth2.credentials import Credentials

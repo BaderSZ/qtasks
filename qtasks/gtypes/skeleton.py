@@ -34,7 +34,7 @@ class TaskType:
         except AttributeError as wrongarg:
             # Better off raising exception instead of returning current time
             logging.exception("_format_time given inappropriate argument. %s", wrongarg)
-            raise   
+            raise
 
     def _update_time_now(self) -> None:
         """Update task time to current time."""
@@ -128,4 +128,3 @@ class ServiceType:
                     "Invalid JSON. Chec your request.\nException %s\nRequest: %s", json_error, current_request
                 )
                 result_queue.put(current_result)
-

@@ -17,9 +17,9 @@ class TaskService(skeleton.ServiceType):
         self._service = service.tasks()
 
     def add(self, task: Task, tasklist: TaskList = None):
-        """Add task to queue. Run execute() after this."""       
+        """Add task to queue. Run execute() after this."""
         if tasklist is None:
-            self._queue_request(self._service.insert(tasklist="@default", body=task.dump()))    
+            self._queue_request(self._service.insert(tasklist="@default", body=task.dump()))
         else:
             self._queue_request(self._service.insert(tasklist=tasklist.get_id(), body=task.dump()))
 

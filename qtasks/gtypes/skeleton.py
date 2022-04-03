@@ -40,6 +40,14 @@ class TaskType:
         """Update task time to current time."""
         self.data["updated"] = self.format_time(datetime.utcnow())
 
+    @classmethod
+    def from_request_data(cls, request_data: dict):  # TODO: how do I hint a class method `self`?`
+        """Set data of Type from request data."""
+        # TODO: check data validity
+        self = cls.__new__(cls)
+        self.data = request_data
+        return self
+
     def to_json(self) -> str:
         """Return TaskType data (dict) as json (str)."""
         return json.dumps(self.data)
@@ -66,6 +74,7 @@ class ServiceType:
             raise NoServiceAvailable("No service created.")
         self.queue = Queue(maxsize=16)  # Choosing 16 temporarily for testing
         self._service = None  # Assign this in inheriting objects
+        self.last_request = {"updated": None, "items": None}
 
     def add(self, task_generic: TaskType) -> None:
         """Add tasktype to queue. Run execute() after this."""
@@ -82,14 +91,20 @@ class ServiceType:
         except FullException:
             logging.exception("Queue is full! Please run execute if possible.")
 
-    def get(self) -> None:
+    def get(self, tasklist: TaskType = None, show_completed: bool = False) -> None:
         """Get any modifications from the 'cloud'."""
         try:
-            self._service.last_request["items"] = self._service.list().execute().get("items", [])
+            if tasklist is None:
+                # no tasklist given -> presume this is a TaskListService, and
+                # get list of tasklists. If otherwise, must want a list of tasks in list
+                self.last_request["items"] = self._service.list().execute().get("items", [])
+            else:
+                self.last_request["items"] = self._service.list(tasklist=tasklist.get_id(),
+                                                                showCompleted=show_completed).execute().get("items", [])
         except Exception as exp:
             logging.exception("Unknown exception! %s", exp)
             raise
-        self._service.last_request["updated"] = TaskType().format_time(datetime.now())
+        self.last_request["updated"] = TaskType().format_time(datetime.now())
 
     def execute(self) -> None:
         """Execute requests queued requests and push task type item to google cloud."""

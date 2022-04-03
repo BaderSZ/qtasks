@@ -19,10 +19,10 @@ try:
     from googleapiclient.discovery import Resource
 
     # Local
-    from keys import keys
-    import config
+    from qtasks.keys import keys
+    from qtasks import config
 
-    from gtypes.exceptions import AuthenticationError
+    from qtasks.gtypes.exceptions import AuthenticationError
 
 
 except ImportError as importexp:
@@ -38,22 +38,19 @@ class ServiceManager:
         self.credentials = None
         self.service = None
 
-    def create_key(self, token_file: str, flow_cli: bool) -> None:
+    def create_key(self, token_file: str) -> None:
         """Create a client key given a token file."""
         # TODO: Other authentication methods
         try:
             flow = InstalledAppFlow.from_client_secrets_file(keys.CLIENT_SECRETS_FILE, config.SCOPES)
-            if flow_cli is False:
-                self.credentials = flow.run_console()  # shows URL in CLI
-            else:
-                self.credentials = flow.run_local_server()  # Opens local tab
+            self.credentials = flow.run_local_server()  # Opens local tab
         except ValueError as verr:
-            logging.exception("flow could not create credentials! Check docs (and comment) %s", verr)
+            logging.critical("flow could not create credentials! Check docs (and comment) %s", verr)
             raise
         with open(token_file, 'w') as token:
             token.write(self.credentials.to_json())
 
-    def create(self, token_file: str, flow_cli: bool = False) -> Resource:
+    def create(self, token_file: str) -> Resource:
         """Create a Resource for interacting with the Google Tasks API."""
         # Get token
         if path.exists(token_file):
@@ -65,7 +62,7 @@ class ServiceManager:
                         logging.info("Refreshing expired token")
                         self.credentials.refresh(Request())
                     else:
-                        self.create_key(token_file, flow_cli)
+                        self.create_key(token_file)
             except (OAuthError, ReauthFailError, RefreshError, TransportError) as authexp:
                 logging.exception("Could not create credentials!\n%s", authexp)
                 logging.exception("Try again?")
@@ -75,6 +72,6 @@ class ServiceManager:
                 raise
         else:
             logging.info("No token file found. Creating...")
-            self.create_key(token_file, flow_cli)
+            self.create_key(token_file)
 
         self.service = build(config.API_SERVICE_NAME, config.API_VERSION, credentials=self.credentials)

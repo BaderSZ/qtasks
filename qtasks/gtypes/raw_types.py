@@ -1,14 +1,15 @@
 """Basic dict types."""
 
-raw_type = {"kind": "tasks#unknown", "title": "Default Name", "updated": "datetime.datetime"}
+raw_type = {"kind": "tasks#unknown", "title": "Default Name", "updated": "datetime.datetime", "id": "randomid"}
 raw_task = {
     "status": "needsAction",
     "kind": "tasks#task",
     "updated": "A String",
     "title": "Default Title",
     "notes": "Added with gtasks",
+    "id": "randomid"
 }
-raw_list = {"kind": "tasks#taskList", "title": "A String", "updated": "A String"}
+raw_list = {"kind": "tasks#taskList", "title": "A String", "updated": "A String", "id": "randomid"}
 
 ## copy-pasta'd from Google docs
 

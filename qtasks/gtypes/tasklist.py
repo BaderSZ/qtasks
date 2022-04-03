@@ -11,5 +11,5 @@ class TaskList(skeleton.TaskType):
 
     def __init__(self,  title: str, updated: datetime = None) -> None:
         """Create TaskList object (inherited from TaskType)."""
-        super().__init__(title=title, updated=updated)
         self.data = raw_types.raw_list
+        super().__init__(title=title, updated=updated)

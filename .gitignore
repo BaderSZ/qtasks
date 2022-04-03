@@ -1,7 +1,19 @@
-**/__pycache__/
+## Environment and build files
+env/
+dist/
+build/
+
+## Project configs
 .vscode/
-docs/
+.pylintrc
+
+## Stuff that should *never* be pushed
 keys/
 tmp/
+
+## Cache
+**/__pycache__/
 **/.mypy_cache/
-.pylintrc
+
+## Temporary ignores
+docs/

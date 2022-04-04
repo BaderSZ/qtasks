@@ -19,10 +19,10 @@ try:
     from googleapiclient.discovery import Resource
 
     # Local
-    from qtasks.keys import keys
-    from qtasks import config
+    from .keys import keys
+    from . import config
 
-    from qtasks.gtypes.exceptions import AuthenticationError
+    from .gtypes.exceptions import AuthenticationError
 
 
 except ImportError as importexp:

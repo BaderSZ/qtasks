@@ -19,8 +19,8 @@ try:
     from googleapiclient.discovery import Resource
 
     # Local
-    from .keys import keys
-    from . import config
+    from keys import keys
+    import config
 
     from .gtypes.exceptions import AuthenticationError
 

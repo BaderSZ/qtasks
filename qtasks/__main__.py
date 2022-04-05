@@ -1,6 +1,6 @@
 #!/bin/env python
 
-"""TODO."""
+"""Main function of the program part."""
 
 # TODO
 

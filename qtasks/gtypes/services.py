@@ -1,20 +1,20 @@
 """Task and TaskList Service Managers. Inherits from skeleton.py:ServiceType."""
 
-from googleapiclient.discovery import Resource
+from qtasks.gtypes.task import Task
+from qtasks.gtypes.tasklist import TaskList
 
-from .task import Task
-from .tasklist import TaskList
+from qtasks.gtypes import skeleton
 
-from . import skeleton
+from qtasks.servicemanager import ServiceManager
 
 
 class TaskService(skeleton.ServiceType):
     """TaskService class to manage with Google Service API, based on ServiceType."""
 
-    def __init__(self, service: Resource) -> None:
+    def __init__(self, servicemanager: ServiceManager) -> None:
         """Create a task service, given an existing ServiceManager resource."""
-        super().__init__(service)
-        self._service = service.tasks()
+        super().__init__(servicemanager)
+        self._service = servicemanager.service.tasks()
 
     def add(self, task: Task, tasklist: TaskList = None):
         """Add task to queue. Run execute() after this."""
@@ -33,16 +33,16 @@ class TaskService(skeleton.ServiceType):
 
     def delete(self, task: Task, tasklist: TaskList) -> None:
         """Delete Task and add request to queue."""
-        self._queue_request(self._service.delete(tasklist=tasklist.get_id(), task=task.get_id()))
+        super().delete(task=task, tasklist=tasklist)
 
 
 class TaskListService(skeleton.ServiceType):
     """TaskListService class to manage with Google Service API, based on ServiceType."""
 
-    def __init__(self, service: Resource) -> None:
+    def __init__(self, servicemanager: ServiceManager) -> None:
         """Create a tasklist service, given an existing ServiceManager resource.."""
-        super().__init__(service)
-        self._service = service.tasklists()
+        super().__init__(servicemanager)
+        self._service = servicemanager.service.tasklists()
         self.default_id = "@default"
 
     def add(self, tasklist: TaskList) -> None:
@@ -55,4 +55,4 @@ class TaskListService(skeleton.ServiceType):
 
     def delete(self, tasklist: TaskList) -> None:
         """Delete Tasklist and add request to queue."""
-        self._queue_request(self._service.delete(tasklist=tasklist.get_id()))
+        super().delete(tasklist=tasklist)

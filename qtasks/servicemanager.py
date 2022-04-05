@@ -3,13 +3,12 @@
 
 try:
     from os import path
-    # from queue import Queue
     import logging
 
     # Auth libs
     from google.auth.transport.requests import Request
-    from google.auth.exceptions import (OAuthError, ReauthFailError, RefreshError,
-                                        TransportError)  # , UserAccessTokenError)
+    from google.auth.exceptions import (OAuthError, ReauthFailError,
+                                        RefreshError, TransportError)
 
     from google.oauth2.credentials import Credentials
     from google_auth_oauthlib.flow import InstalledAppFlow
@@ -17,26 +16,27 @@ try:
     # API libs
     from googleapiclient.discovery import build
     from googleapiclient.discovery import Resource
+    from googleapiclient.errors import HttpError
 
     # Local
-    from keys import keys
-    import config
+    from qtasks.keys import keys
+    from qtasks import config
 
-    from .gtypes.exceptions import AuthenticationError
-
+    # Types
+    from qtasks.gtypes.exceptions import AuthenticationError
+    from qtasks.gtypes.skeleton import ServiceManagerType
 
 except ImportError as importexp:
     logging.critical("Import Exception: Could not import a library!\n %s", importexp)
     raise
 
 
-class ServiceManager:
+class ServiceManager(ServiceManagerType):
     """Google Services manager object. Creates and manages keys and services."""
 
     def __init__(self) -> None:
         """Initiate an empty object."""
-        self.credentials = None
-        self.service = None
+        super().__init__()
 
     def create_key(self, token_file: str) -> None:
         """Create a client key given a token file."""
@@ -73,5 +73,7 @@ class ServiceManager:
         else:
             logging.info("No token file found. Creating...")
             self.create_key(token_file)
-
-        self.service = build(config.API_SERVICE_NAME, config.API_VERSION, credentials=self.credentials)
+        try:
+            self.service = build(config.API_SERVICE_NAME, config.API_VERSION, credentials=self.credentials)
+        except HttpError as httperr:
+            logging.exception("Exception error: Request failed\n%s", httperr)

@@ -6,10 +6,11 @@ import logging
 
 import json
 
+from googleapiclient.http import HttpRequest
 from googleapiclient.errors import HttpError, InvalidJsonError
 
-from . import raw_types
-from .exceptions import ExecutionError, NoServiceAvailable
+from qtasks.gtypes import raw_types
+from qtasks.gtypes.exceptions import ExecutionError, Error, NoServiceAvailable
 
 
 class TaskType:
@@ -65,12 +66,21 @@ class TaskType:
         return self.data["updated"]
 
 
+class ServiceManagerType:
+    """Skeleton type for Service Manager."""
+
+    def __init__(self):
+        """Initialize empty contents."""
+        self.service = None
+        self.credentials = None
+
+
 class ServiceType:
     """Create raw service type."""
 
-    def __init__(self, service=None) -> None:
+    def __init__(self, servicemanager: ServiceManagerType = None) -> None:
         """Construct a ServicesType. Raises an exception if no service object exists."""
-        if service is None:
+        if servicemanager is None or servicemanager.service is None:
             raise NoServiceAvailable("No service created.")
         self.queue = Queue(maxsize=16)  # Choosing 16 temporarily for testing
         self._service = None  # Assign this in inheriting objects
@@ -84,12 +94,13 @@ class ServiceType:
             logging.exception("Queue is full! Please run execute if possible.")
             raise
 
-    def _queue_request(self, request):
+    def _queue_request(self, request: HttpRequest) -> None:
         """Add request to queue."""
         try:
             self.queue.put(request)
         except FullException:
             logging.exception("Queue is full! Please run execute if possible.")
+            raise
 
     def get(self, tasklist: TaskType = None, show_completed: bool = False) -> None:
         """Get any modifications from the 'cloud'."""
@@ -101,6 +112,7 @@ class ServiceType:
             else:
                 self.last_request["items"] = self._service.list(tasklist=tasklist.get_id(),
                                                                 showCompleted=show_completed).execute().get("items", [])
+
         except Exception as exp:
             logging.exception("Unknown exception! %s", exp)
             raise
@@ -128,3 +140,20 @@ class ServiceType:
                     "Invalid JSON. Chec your request.\nException %s\nRequest: %s", json_error, current_request
                 )
                 result_queue.put(current_result)
+
+    def get_items(self) -> list:
+        """Get list of items in from  the last request."""
+        if self.last_request['items'] is None:
+            raise Error("No items available. Please run `get()`.")
+        return self.last_request['items']
+
+    def delete(self, task: TaskType = None, tasklist: TaskType = None) -> None:
+        """Delete TaskType object and add request to queue."""
+        if task is None:
+            # Must be a tasklist.
+            self._queue_request(self._service.delete(tasklist=tasklist.get_id()))
+        elif tasklist is not None:
+            # task and tasklist are both not None.
+            self._queue_request(self._service.delete(task=task.get_id(), tasklist=tasklist.get_id()))
+        else:
+            raise Error("Task or TaskList are not available!")

@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from . import raw_types, skeleton
+from qtasks.gtypes import raw_types, skeleton
 
 
 class Task(skeleton.TaskType):

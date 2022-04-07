@@ -8,5 +8,6 @@ In no particular order:
  - [ ] Write docs
  - [ ] Write a CLI wrapper to manage tasks
  - [ ] Automate package tests and builds
- - [ ] Design a PyQt GUI 
+ - [x] Design a PyQt GUI
+ - [ ] Design a PyQt _pretty_ GUI
  - [ ] More coming soon

@@ -3,14 +3,27 @@ name = "qtasks"
 version = "0.1.0"
 description = "Google Tasks Library and GUI"
 authors = ["Bader Zaidan <bader@zaidan.pw>"]
-license = "GPL v3.0"
+license = "GPL-3.0-or-later"
+homepage = "https://github.com/BaderSZ/qtasks/"
+classifiers = [
+	"Programming Language :: Python :: 3.10",
+	"Development Status :: 2 - Pre-Alpha",
+	"Environment :: X11 Applications :: Qt",
+	"License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+	"Natural Language :: English",
+	"Operating System :: POSIX :: Linux",
+	"Operating System :: POSIX :: Other",
+	"Topic :: Other/Nonlisted Topic",
+	"Topic :: Utilities"
+]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = ">=3.10,<3.11"
 google-auth = "^2.6.2"
 google-auth-oauthlib = "^0.5.1"
 google-api-core = "^2.7.1"
 google-api-python-client = "^2.42.0"
+PySide6 = "^6.2.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.0"
@@ -25,3 +38,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 120
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/BaderSZ/qtasks/issues"

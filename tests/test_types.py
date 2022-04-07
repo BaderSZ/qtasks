@@ -1,7 +1,7 @@
 """Run a few tests on the build in types and methods."""
 
 from qtasks.gtypes.task import Task
-from qtasks.gtypes.services import TaskListService
+# from qtasks.gtypes.services import TaskListService
 
 # from qtasks import __version__
 

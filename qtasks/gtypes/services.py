@@ -5,7 +5,7 @@ from qtasks.gtypes.tasklist import TaskList
 
 from qtasks.gtypes import skeleton
 
-from qtasks.servicemanager import ServiceManager
+from qtasks.manager.servicemanager import ServiceManager
 
 
 class TaskService(skeleton.ServiceType):

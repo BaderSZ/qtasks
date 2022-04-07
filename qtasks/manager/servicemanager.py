@@ -20,7 +20,7 @@ try:
 
     # Local
     from qtasks.keys import keys
-    from qtasks import config
+    from qtasks.manager import config
 
     # Types
     from qtasks.gtypes.exceptions import AuthenticationError

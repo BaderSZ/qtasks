@@ -1,7 +1,7 @@
 """Test service manager."""
 
 # import pytest
-from qtasks.servicemanager import ServiceManager
+from qtasks.manager.servicemanager import ServiceManager
 
 
 def test_servicemanager_init():

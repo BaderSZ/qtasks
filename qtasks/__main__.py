@@ -5,13 +5,14 @@
 
 # TODO
 
-import sys
+# import sys
 import logging
 
 from qtasks.manager.servicemanager import ServiceManager
 
 from qtasks.gtypes.services import TaskListService, TaskService
 
+from qtasks.gui.mainwindow import startGui
 # from qtasks.gtypes.task import Task
 # from qtasks.gtypes.tasklist import TaskList
 
@@ -26,4 +27,5 @@ if __name__ == "__main__":
     servicemanager.create(keys.TOKENFILE)
     taskservice = TaskService(servicemanager=servicemanager)
     tasklistservice = TaskListService(servicemanager=servicemanager)
-    sys.exit()
+    # sys.exit()
+    startGui()

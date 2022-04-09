@@ -1,4 +1,7 @@
 """TODO."""
+
+__appname__ = 'QTasks'
+__comment__ = 'Google Tasks Client'
 __version__ = '0.1.0'
 
 

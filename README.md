@@ -14,6 +14,8 @@ This is a work-in-progress. Documentation will come soon.
 
 The hardest dependency is python `>=3.10,<3.11` due to PySide6.
 
+You will need to create your own project and corresponding client secrets file for now in the [google developer console](https://console.cloud.google.com/apis/credentials) with the scopes in [config.py](qtasks/manager/config.py).
+
 ## Building and running
 ```sh
 poetry run generate-all  # Generate .py files for resources and UI

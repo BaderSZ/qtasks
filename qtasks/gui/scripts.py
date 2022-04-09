@@ -21,6 +21,17 @@ def generate_rcc():
 def generate_uic():
     qt_tool_wrapper("uic", ['-g', 'python'] + ui_arg , True)
 
-def generate():
-    generate_rcc()
-    generate_uic()
+def generate_all():
+    """These functions raise SystemExit. Suppress and continue."""
+
+    # This is bad! Find a better solution...
+    try:
+        generate_rcc()
+    except SystemExit:
+        pass
+
+    try:
+        generate_uic()
+    except SystemExit:
+        pass
+

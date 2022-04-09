@@ -2,7 +2,6 @@
 
 """Main function: start gui."""
 
-# TODO
 
 import logging
 

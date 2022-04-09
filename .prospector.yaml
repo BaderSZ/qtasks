@@ -20,6 +20,8 @@ ignore-paths:
 - __pycache__
 - keys
 - .vscode
+- qtasks/gui/assets/resources.py
+- qtasks/gui/ui.py
 
 ignore-patterns:
 - __init__.py

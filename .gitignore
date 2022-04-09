@@ -21,3 +21,4 @@ tmp/
 docs/
 qtasks/gui/qtasks.pyproject.user
 **/.qt_for_python/
+qtasks/gui/testwindow.py

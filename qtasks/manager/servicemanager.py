@@ -42,12 +42,14 @@ class ServiceManager(ServiceManagerType):
         """Create a client key given a token file."""
         # TODO: Other authentication methods
         try:
+            logging.debug("Creating flow from secrets file.")
             flow = InstalledAppFlow.from_client_secrets_file(keys.CLIENT_SECRETS_FILE, config.SCOPES)
             self.credentials = flow.run_local_server()  # Opens local tab
         except ValueError as verr:
             logging.critical("flow could not create credentials! Check docs (and comment) %s", verr)
             raise
         with open(token_file, 'w') as token:
+            logging.debug("Writing to new credentials to file.")
             token.write(self.credentials.to_json())
 
     def create(self, token_file: str) -> Resource:
@@ -59,17 +61,22 @@ class ServiceManager(ServiceManagerType):
                 self.credentials = Credentials.from_authorized_user_file(token_file, config.SCOPES)
                 if not self.credentials or not self.credentials.valid:
                     if (self.credentials and self.credentials.expired and self.credentials.refresh_token):
-                        logging.info("Refreshing expired token")
+                        logging.info("Token is expired! Refreshing...")
                         self.credentials.refresh(Request())
+                        with open(token_file, 'w') as token:
+                            token.write(self.credentials.to_json())
                     else:
                         self.create_key(token_file)
-            except (OAuthError, ReauthFailError, RefreshError, TransportError) as authexp:
+            except (OAuthError, ReauthFailError, TransportError) as authexp:
                 logging.exception("Could not create credentials!\n%s", authexp)
                 logging.exception("Try again?")
                 raise AuthenticationError("Could not authenticate: ") from authexp
             except OSError as exp:
                 logging.critical("Could not open file! %s", exp)
                 raise
+            except RefreshError:
+                logging.exception("Certificate expired or revoked. creating a new one.")
+                self.create_key(token_file)
         else:
             logging.info("No token file found. Creating...")
             self.create_key(token_file)

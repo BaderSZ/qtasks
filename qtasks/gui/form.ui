@@ -7,45 +7,221 @@
     <x>0</x>
     <y>0</y>
     <width>241</width>
-    <height>491</height>
+    <height>510</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>128</width>
+    <height>0</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Roboto</family>
+    <pointsize>14</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+	background-color: rgb(255, 255, 255);
+}
+</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>128</width>
+     <height>0</height>
+    </size>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+    <item row="1" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QSplitter" name="splitter">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <widget class="QComboBox" name="comboBox">
-         <item>
-          <property name="text">
-           <string>All Lists</string>
-          </property>
-         </item>
-        </widget>
-       </widget>
-      </item>
-      <item>
        <widget class="QLineEdit" name="lineEdit">
+        <property name="minimumSize">
+         <size>
+          <width>64</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Roboto</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+	border: none;
+	background-color: &quot;white&quot;;
+}
+</string>
+        </property>
         <property name="text">
          <string/>
         </property>
+        <property name="placeholderText">
+         <string>Add a task...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QListWidget" name="listWidget">
+        <property name="font">
+         <font>
+          <family>Roboto</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QListWidget {
+	border: none;
+	background-color: &quot;white&quot;;
+    color: black;
+}
+
+
+QAbstractItemView {
+    padding: 0 0.4em;
+}
+
+QAbstractItemView::item {
+    padding: 0.4em 0 0.2em;
+}
+
+QListView::item:selected:!active {
+    background: none;
+}</string>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::ExtendedSelection</enum>
+        </property>
+        <property name="isWrapping" stdset="0">
+         <bool>true</bool>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <item>
+         <property name="text">
+          <string>Item1</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Item2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Item3</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>
     </item>
-    <item row="1" column="0">
-     <widget class="QListWidget" name="listWidget">
-      <property name="editTriggers">
-       <set>QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
-      </property>
-     </widget>
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item alignment="Qt::AlignVCenter">
+       <widget class="QComboBox" name="comboBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <family>Roboto Medium</family>
+          <pointsize>12</pointsize>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QComboBox {
+    border: none;
+    color: rgb(	95, 99, 104);
+    background: white;
+	font: 500 12pt &quot;Roboto Medium&quot;;
+    selection-background-color: rgb(207, 207, 207);
+    border-radius: 10%;
+
+}
+
+QComboBox:on {
+    border: none;
+    color: rgb(	95, 99, 104);
+	background: white;
+    selection-background-color: rgb(207, 207, 207);
+	font: 10pt &quot;Roboto&quot;;
+    border-radius: 10%;
+
+}
+
+QComboBox QAbstractItemView {
+    border-radius: 10%;
+    selection-background-color: rgb(207, 207, 207);
+	background: white;
+}
+
+QComboBox::drop-down, QComboBox::drop-down:on {
+    border: none;
+    selection-background-color: rgb(207, 207, 207);
+	background: white;
+}
+
+QComboBox::down-arrow, QComboBox::down-arrow:on {
+    image: url(:/assets/triangle.svg);
+    width: 10px;
+    height: 10px;
+    subcontrol-origin: margin;
+    subcontrol-position: center right;
+    padding-right: 10px;
+}</string>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+        <item>
+         <property name="text">
+          <string>All Lists</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Preferred</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -101,6 +277,7 @@
    <addaction name="menuVIew"/>
    <addaction name="menuHelp"/>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionAddTask">
    <property name="text">
     <string>&amp;Task</string>

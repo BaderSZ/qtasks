@@ -41,3 +41,8 @@ line-length = 120
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/BaderSZ/qtasks/issues"
+
+[tool.poetry.scripts]
+generate = "qtasks.gui.scripts:generate"
+generate-gui = "qtasks.gui.scripts:generate_uic"
+generate-resource = "qtasks.gui.scripts:generate_rcc"

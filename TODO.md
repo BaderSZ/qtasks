@@ -10,5 +10,7 @@ In no particular order:
  - [ ] Automate package tests and builds
  - [x] Design a PyQt GUI
  - [ ] Design a PyQt _pretty_ GUI (WIP), with animations
- - [ ] Timer event to fetch tasks
+ - [ ] Mark tasks as complete instead of deleting
+ - [ ] Show due date
+ - [ ] Timer event to fetch tasks (take into account current update slots)
  - [ ] Multithreaded (run managers in background)

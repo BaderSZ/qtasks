@@ -33,6 +33,8 @@ class TaskService(skeleton.ServiceType):
 
     def delete(self, task: Task, tasklist: TaskList) -> None:
         """Delete Task and add request to queue."""
+        if tasklist is None:
+            raise Exception("Bad argument: tasklist is None")
         super().delete(task=task, tasklist=tasklist)
 
 

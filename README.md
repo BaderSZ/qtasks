@@ -12,15 +12,24 @@ This is a work-in-progress. Documentation will come soon.
  - google-api-python-client
  - PySide6
 
+The hardest dependency is python `>=3.10,<3.11` due to PySide6.
+
+## Building and running
+```sh
+poetry run generate-all  # Generate .py files for resources and UI
+poetry install
+```
+To run:
+```sh
+poetry run generate-all 
+poetry run main  # starts up the GUI
+```
+
 ## Virtualenv
 
  - Created via [poetry](https://python-poetry.org/docs/cli/#env).
  - Python binary is (usually) in `.venv/bin/python`
  - You can enable with `source venv/bin/activate` and disable with `deactivate`
-
-
-## Supported Python Versions
-The hardest dependency is python `>=3.10,<3.11` due to PySide6.
 
 ## License
 See [the LICENSE.txt file](LICENSE.txt) for the GPL v3.0 text. 

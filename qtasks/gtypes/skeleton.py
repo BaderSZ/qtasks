@@ -1,5 +1,7 @@
 """task class."""
 
+from __future__ import annotations
+
 from queue import Queue, Full as FullException
 from datetime import datetime
 import logging
@@ -42,12 +44,16 @@ class TaskType:
         self.data["updated"] = self.format_time(datetime.utcnow())
 
     @classmethod
-    def from_request_data(cls, request_data: dict):  # TODO: how do I hint a class method `self`?`
+    def from_request_data(cls, request_data: dict) -> TaskType:
         """Set data of Type from request data."""
-        # TODO: check data validity
-        self = cls.__new__(cls)
-        self.data = request_data
-        return self
+        try:
+            datetime.fromisoformat(request_data['updated'].rstrip("Z"))
+            self = cls.__new__(cls)
+            self.data = request_data
+            return self
+        except ValueError:
+            logging.error("Invalid date given")
+            return None
 
     def to_json(self) -> str:
         """Return TaskType data (dict) as json (str)."""
@@ -130,6 +136,7 @@ class ServiceType:
             try:
                 current_request = self.queue.get()
                 current_result = current_request.execute()
+                print("REQ: Result: ", current_result)
             except HttpError as request_error:
                 error_count += 1
                 logging.exception("Could not execute request!\n%s", request_error)
@@ -154,6 +161,6 @@ class ServiceType:
             self._queue_request(self._service.delete(tasklist=tasklist.get_id()))
         elif tasklist is not None:
             # task and tasklist are both not None.
-            self._queue_request(self._service.delete(task=task.get_id(), tasklist=tasklist.get_id()))
+            self._queue_request(self._service.delete(tasklist=tasklist.get_id(), task=task.get_id()))
         else:
             raise Error("Task or TaskList are not available!")
